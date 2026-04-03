@@ -962,19 +962,127 @@ class GreenPowerApp:
             messagebox.showerror("Error", f"Error en configuración:\n{str(e)}")
 
     def crear_menu(self):
-        mb = tk.Menu(self.root)
-        self.root.config(menu=mb)
+        self.menu = tk.Menu(self.root)
+        self.root.config(menu=self.menu)
 
-        arch = tk.Menu(mb, tearoff=0)
-        mb.add_cascade(label="📁 Archivo", menu=arch)
-        arch.add_command(label="🔌 Reconectar BD", command=self.reconectar)
-        arch.add_command(label="⚙️ Configurar conexión", command=self._config_db)
-        arch.add_separator()
-        arch.add_command(label="❌ Salir", command=self.root.quit)
+        # ── Archivo ────────────────────────────────────────────────
+        menu_archivo = tk.Menu(self.menu, tearoff=False)
+        self.menu.add_cascade(label="📁 Archivo", menu=menu_archivo)
+        menu_archivo.add_command(label="Nuevo proyecto", command=self._nuevo_proyecto)
+        menu_archivo.add_command(label="Abrir proyecto", command=self._abrir_proyecto)
+        menu_archivo.add_command(label="Guardar todo", command=self._guardar_todo)
+        menu_archivo.add_separator()
+        menu_archivo.add_command(label="Salir", command=self.root.quit)
 
-        dat = tk.Menu(mb, tearoff=0)
-        mb.add_cascade(label="🗄️ Datos", menu=dat)
-        dat.add_command(label="🔄 Recargar todo", command=self._recargar_todo)
+        # ── Plantas ────────────────────────────────────────────────
+        menu_plantas = tk.Menu(self.menu, tearoff=False)
+        self.menu.add_cascade(label="🏭 Plantas", menu=menu_plantas)
+        menu_plantas.add_command(label="Registro de plantas", command=self._ir_a_plantas)
+        menu_plantas.add_command(label="Equipos de generación", command=self._ir_a_equipos_generacion)
+        menu_plantas.add_command(label="Estado operativo", command=self._ir_a_estado_operativo)
+
+        # ── Estaciones meteorológicas ──────────────────────────────
+        menu_estaciones = tk.Menu(self.menu, tearoff=False)
+        self.menu.add_cascade(label="🌐 Estaciones meteorológicas", menu=menu_estaciones)
+        menu_estaciones.add_command(label="Registro de estaciones", command=self._ir_a_estaciones)
+        menu_estaciones.add_command(label="Lecturas meteorológicas", command=self._ir_a_lecturas_meteorologicas)
+
+        # ── Producción energética ──────────────────────────────────
+        menu_produccion = tk.Menu(self.menu, tearoff=False)
+        self.menu.add_cascade(label="⚡ Producción energética", menu=menu_produccion)
+        menu_produccion.add_command(label="Registro de producción", command=self._ir_a_produccion)
+        menu_produccion.add_command(label="Análisis de producción", command=self._análisis_produccion)
+
+        # ── Red de distribución ────────────────────────────────────
+        menu_red = tk.Menu(self.menu, tearoff=False)
+        self.menu.add_cascade(label="🔌 Red de distribución", menu=menu_red)
+        menu_red.add_command(label="Lineas de distribución", command=self._ir_a_lineas_distribucion)
+        menu_red.add_command(label="Subestaciones eléctricas", command=self._ir_a_subestaciones)
+
+        # ── Contratos de venta de energía ──────────────────────────
+        menu_contratos = tk.Menu(self.menu, tearoff=False)
+        self.menu.add_cascade(label="🤝 Contratos de venta", menu=menu_contratos)
+        menu_contratos.add_command(label="Registro de contratos", command=self._ir_a_contratos)
+        menu_contratos.add_command(label="Estado de contratos", command=self._ir_a_estado_contratos)
+
+        # ── Mantenimiento ──────────────────────────────────────────
+        menu_mantenimiento = tk.Menu(self.menu, tearoff=False)
+        self.menu.add_cascade(label="🔧 Mantenimiento", menu=menu_mantenimiento)
+        menu_mantenimiento.add_command(label="Ordenes de trabajo", command=self._ir_a_ordenes_mantenimiento)
+        menu_mantenimiento.add_command(label="Historial de mantenimiento", command=self._ir_a_historial_mantenimiento)
+
+        # ── Incidencias operativas ─────────────────────────────────
+        menu_incidencias = tk.Menu(self.menu, tearoff=False)
+        self.menu.add_cascade(label="🚨 Incidencias", menu=menu_incidencias)
+        menu_incidencias.add_command(label="Registro de incidencias", command=self._ir_a_incidencias)
+        menu_incidencias.add_command(label="Historial de incidencias", command=self._ir_a_historial_incidencias)
+
+        # ── Ayuda ──────────────────────────────────────────────────
+        menu_ayuda = tk.Menu(self.menu, tearoff=False)
+        self.menu.add_cascade(label="❓ Ayuda", menu=menu_ayuda)
+        menu_ayuda.add_command(label="Acerca de", command=self._acerca_de)
+        menu_ayuda.add_command(label="Manual rápido", command=self._manual_rapido)
+
+    # ── Métodos de navegación (ejemplos) ─────────────────────────────────
+    def _nuevo_proyecto(self):
+        messagebox.showinfo("Nuevo proyecto", "Creando nuevo proyecto de energía.")
+
+    def _abrir_proyecto(self):
+        messagebox.showinfo("Abrir proyecto", "Abriendo proyecto existente.")
+
+    def _guardar_todo(self):
+        messagebox.showinfo("Guardar todo", "Guardando datos actuales.")
+
+    def _ir_a_plantas(self):
+        self.nb.select(0)  # selecciona pestaña de Plantas
+
+    def _ir_a_equipos_generacion(self):
+        messagebox.showinfo("Equipos de generación", "Módulo de equipos de generación aún no implementado.")
+
+    def _ir_a_estado_operativo(self):
+        messagebox.showinfo("Estado operativo", "Módulo de estado operativo aún no implementado.")
+
+    def _ir_a_estaciones(self):
+        messagebox.showinfo("Estaciones meteorológicas", "Módulo de estaciones meteorológicas aún no implementado.")
+
+    def _ir_a_lecturas_meteorologicas(self):
+        messagebox.showinfo("Lecturas meteorológicas", "Módulo de lecturas meteorológicas aún no implementado.")
+
+    def _ir_a_produccion(self):
+        messagebox.showinfo("Producción energética", "Módulo de producción energética aún no implementado.")
+
+    def _análisis_produccion(self):
+        messagebox.showinfo("Análisis de producción", "Análisis de producción energética.")
+
+    def _ir_a_lineas_distribucion(self):
+        messagebox.showinfo("Líneas de distribución", "Módulo de líneas de distribución aún no implementado.")
+
+    def _ir_a_subestaciones(self):
+        messagebox.showinfo("Subestaciones eléctricas", "Módulo de subestaciones eléctricas aún no implementado.")
+
+    def _ir_a_contratos(self):
+        messagebox.showinfo("Contratos de venta", "Módulo de contratos de venta aún no implementado.")
+
+    def _ir_a_estado_contratos(self):
+        messagebox.showinfo("Estado de contratos", "Módulo de estado de contratos aún no implementado.")
+
+    def _ir_a_ordenes_mantenimiento(self):
+        messagebox.showinfo("Órdenes de mantenimiento", "Módulo de órdenes de mantenimiento aún no implementado.")
+
+    def _ir_a_historial_mantenimiento(self):
+        messagebox.showinfo("Historial de mantenimiento", "Módulo de historial de mantenimiento aún no implementado.")
+
+    def _ir_a_incidencias(self):
+        messagebox.showinfo("Registro de incidencias", "Módulo de incidencias aún no implementado.")
+
+    def _ir_a_historial_incidencias(self):
+        messagebox.showinfo("Historial de incidencias", "Historial de incidencias operativas.")
+
+    def _acerca_de(self):
+        messagebox.showinfo("Acerca de", "GreenPower\nVersión 1.0\nStiven Salazar")
+
+    def _manual_rapido(self):
+        messagebox.showinfo("Manual", "Paso 1: Registrar planta.\nPaso 2: Subir foto.\nPaso 3: Exportar datos.")
 
 
 
